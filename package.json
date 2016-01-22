@@ -26,11 +26,15 @@
   },
   "homepage": "https://github.com/hexaworld/hexaworld-core#readme",
   "dependencies": {
+    "crtrdg-entity": "^1.0.0",
     "crtrdg-keyboard": "^1.0.1",
     "crtrdg-touch": "^1.1.0",
     "crtrdg-tty": "^1.0.0",
     "eventemitter2": "^0.4.14",
     "gameloop": "^1.1.3",
-    "lodash": "^4.0.0"
+    "inherits": "^2.0.1",
+    "lodash": "^4.0.0",
+    "point-in-polygon": "^1.0.0",
+    "transformist": "^1.0.0"
   }
 }

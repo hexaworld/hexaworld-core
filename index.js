@@ -4,17 +4,19 @@ var Game = require('gameloop')
 var Touch = require('crtrdg-touch')
 var Keyboard = require('crtrdg-keyboard')
 var TTY = require('crtrdg-tty')
+var Player = require('./entity/player.js')
+var World = require('./entity/world.js')
 
-module.exports = function(mode, schema) {
+module.exports = function(mode, schema, opts) {
 
   var game, keyboard, touch
 
   if (mode == 'webgl') {
     game = new Game({
-      canvas: canvas,
-      renderer: canvas.getContext('webgl'),
-      width: height,
-      height: height
+      canvas: opts.canvas,
+      renderer: opts.canvas.getContext('webgl'),
+      width: opts.height,
+      height: opts.height
     })
     keyboard = new Keyboard(game)
     touch = new Touch(game)
@@ -25,8 +27,15 @@ module.exports = function(mode, schema) {
     tty = new TTY(game)
   }
 
+  var player = new Player()
+  var world = new World(schema.map.tiles, {scale: 50})
+
+  world.addTo(game)
+  player.addTo(game)
+
   game.on('update', function (dt) {
-    console.log(tty.keysDown)
+    player.move(tty.keysDown)
+    console.log(player.translation())
   })
 
   return {
