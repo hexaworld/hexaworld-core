@@ -6,7 +6,7 @@ Core game loop and gameplay logic for hexaworld games. Constructs a game world u
 
 First define a schema
 
-```
+```javascript
 var config = {
   energy: 2400
 }
@@ -27,20 +27,20 @@ var level = {
 
 then initialize the world
 
-```
+```javascript
 var hexaworld = require('hexaworld-core')
 var game = hexaworld('headless', level)
 ```
 
 start the game
 
-```
+```javascript
 game.start()
 ```
 
 and you can listen for various game events, e.g.
 
-```
+```javascript
 game.on(['player', 'enter'], {
 	// player enters a tile
 })
@@ -58,12 +58,12 @@ Two modes are currently supported `webgl` and `headless`. Although no rendering 
 
 #### `headless`
 Doesn't require a browser, uses terminal for input.
-```
+```javascript
 var game = hexaworld('headless', level)
 ```
 
 #### `webgl`
 Uses a canvas element with a webgl context, uses keyboard and touch for input.
-```
+```javascript
 var game = hexaworld('webgl', level, {canvas: 'id', height: 700})
 ```
