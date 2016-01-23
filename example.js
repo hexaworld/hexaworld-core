@@ -19,7 +19,5 @@ var level = {
 }
 
 var hexaworld = require('./index.js')
-
 var game = hexaworld('headless', level)
-
 game.start()
