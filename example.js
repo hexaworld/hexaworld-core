@@ -1,8 +1,5 @@
 var config = {
-  name: 'welcome',
-  lives: 3,
-  moves: 6,
-  difficulty: 1
+  moves: 6
 }
 
 var map = {
@@ -13,16 +10,23 @@ var map = {
   ]
 }
 
-var level = {
+var schema = {
   config: config,
   map: map
 }
 
-var hexaworld = require('./index.js')
-var game = hexaworld('headless', level)
+var gameloop = require('gameloop')()
+var controller = require('crtrdg-tty')(gameloop)
+var core = require('./index.js')
 
-game.on('update', function (interval) {
+var game = core({
+  schema: schema, 
+  gameloop: gameloop,
+  controller: controller
+})
+
+gameloop.on('update', function (interval) {
   console.log(game.objects[0].transform.translation)
 })
 
-game.start()
+gameloop.start()
