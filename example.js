@@ -20,4 +20,9 @@ var level = {
 
 var hexaworld = require('./index.js')
 var game = hexaworld('headless', level)
+
+game.on('update', function (interval) {
+  console.log(game.objects[0].transform.translation)
+})
+
 game.start()
