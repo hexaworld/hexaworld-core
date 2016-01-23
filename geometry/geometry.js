@@ -12,9 +12,9 @@ function Geometry (opts) {
   opts.props = opts.props || {}
   opts.children = opts.children || []
   _.defaults(opts.props, {
-    cue: false,
-    target: false,
-    consumable: false
+    trigger: false,
+    consumable: false,
+    movable: false
   })
   _.assign(this, opts)
   this.stage()
