@@ -6,50 +6,61 @@ var Keyboard = require('crtrdg-keyboard')
 var TTY = require('crtrdg-tty')
 var Player = require('./entity/player.js')
 var World = require('./entity/world.js')
+var inherits = require('inherits')
 
-module.exports = function(mode, schema, opts) {
+module.exports = Core
+inherits(Core, EventEmitter)
 
-  var game, keyboard, touch
+function Core (mode, schema, canvas) {
+  if (!(this instanceof Core)) return new Core(mode, schema, canvas)
+  mode = mode || 'headless'
 
   if (mode == 'webgl') {
-    game = new Game({
-      canvas: opts.canvas,
-      renderer: opts.canvas.getContext('webgl'),
-      width: opts.height,
-      height: opts.height
+    this.game = new Game({
+      canvas: canvas,
+      renderer: canvas.getContext('webgl'),
+      width: canvas.clientHeight,
+      height: canvas.clientWidth
     })
-    keyboard = new Keyboard(game)
-    touch = new Touch(game)
+    this.controls = new Keyboard(this.game)
   }
 
   if (mode == 'headless') {
-    game = new Game()
-    tty = new TTY(game)
+    this.game = new Game()
+    this.controls = new TTY(this.game)
   }
+
+  this.init(schema)
+}
+
+Core.prototype.init = function (schema) {
+  var game = this.game
+  var self = this
+
+  var world = new World(schema.map.tiles, {scale: 50})
+  world.addTo(game)
 
   var player = new Player()
-  var world = new World(schema.map.tiles, {scale: 50})
-
-  world.addTo(game)
   player.addTo(game)
 
-  game.on('update', function (dt) {
-    player.move(tty.keysDown)
-    console.log(player.translation())
+  game.on('update', function (interval) {
+    player.move(self.controls.keysDown)
+    self.emit('update', interval)
   })
 
-  return {
-    start: function () {
-      game.start()
-    },
+  game.on('draw', function (context) {
+    self.emit('draw', context)
+  })
 
-    pause: function () {
-      game.pause()
-    },
+  var objects = []
+  objects.push(player.geometry)
+  world.tiles.forEach(function (tile) {
+    objects.push(tile.geometry)
+  })
 
-    resume: function () {
-      game.resume()
-    },
-  }
+  this.objects = objects
+}
 
+Core.prototype.start = function () {
+  this.game.start()
 }
