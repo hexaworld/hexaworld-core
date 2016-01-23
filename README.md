@@ -46,11 +46,14 @@ when you start the gameloop the game will begin
 gameloop.start()
 ```
 
-#### `controller`
+### inputs
 
-Should have a `keysDown` property with the current state of keys and/or buttons.
+#### `schema`
 
-Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
+Should follow the schema for levels defined in `hexaworld-schema`.
+
+Examples: `hexaworld-levels`
+
 
 #### `gameloop`
 
@@ -58,3 +61,9 @@ Should have an `update` event for every refresh of the gameloop (e.g. every fram
 
 Examples: `gameloop`, `gameloop-canvas`
 
+
+#### `controller`
+
+Should have a `keysDown` property with the current state of keys and/or buttons.
+
+Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
