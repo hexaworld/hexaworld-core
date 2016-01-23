@@ -1,6 +1,6 @@
 # hexaworld-core
 
-Core game loop and gameplay logic for hexaworld games. Constructs a game world using the provided schema, and runs the game, included movement, collision detection, and gameplay events. This module is designed to support a variety of external renderers, or other forms of progammatic access. It only requires a `gameloop` and a `controller`, each of which conform to a simple API.
+Core game loop and gameplay logic for hexaworld games. Constructs a game world using the provided schema, and runs the game, including movement, collision detection, and gameplay events. This module is designed to be passed to a variety of external renderers or other forms of progammatic access. It only requires a `schema`, a `gameloop`, and a `controller`, each of which conform to a simple API.
 
 ### example
 
