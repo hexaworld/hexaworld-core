@@ -48,9 +48,13 @@ gameloop.start()
 
 #### `controller`
 
-Should have a `keysDown` property with the current state of keys and/or buttons, for examples see `crtrdg-keyboard`, `crtrdg-touch`, and `crtrdg-tty`.
+Should have a `keysDown` property with the current state of keys and/or buttons.
+
+Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
 
 #### `gameloop`
 
-Should have an `update` event for every refresh of the gameloop (e.g. every frame), for examples see `gameloop` or `gameloop-canvas`.
+Should have an `update` event for every refresh of the gameloop (e.g. every frame).
+
+Examples: `gameloop`, `gameloop-canvas`
 
