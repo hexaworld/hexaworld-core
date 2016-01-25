@@ -8,13 +8,15 @@ function Geometry (opts) {
   var self = this
   if (!opts.points) throw new Error('Must provide points')
   if (!opts.id) throw new Error('Must provide an id')
+  opts.type = opts.type || opts.id
   opts.transform = opts.transform ? transform(opts.transform) : transform()
   opts.props = opts.props || {}
   opts.children = opts.children || []
   _.defaults(opts.props, {
     trigger: false,
     consumable: false,
-    movable: false
+    movable: false,
+    mergeable: false
   })
   _.assign(this, opts)
   this.stage()

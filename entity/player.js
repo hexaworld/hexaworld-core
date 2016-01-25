@@ -10,7 +10,9 @@ inherits(Player, Entity)
 function Player (opts) {
   this.opts = opts || {}
   this.geometry = point({
-    id: 'player'
+    id: 'player',
+    type: 'player',
+    props: {moveable: true}
   })
   this.movement = new Freemove({
     keymap: ['<left>', '<right>', '<up>', '<down>'],

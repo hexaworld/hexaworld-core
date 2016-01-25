@@ -5,8 +5,8 @@ var config = {
 var map = {
   tiles: [
     {coordinates: [0, 0], paths: [0, 2, 4]},
-    {coordinates: [-1, 0], paths: [0, 2, 4]},
-    {coordinates: [0, 1], paths: [0, 2, 4]}
+    {coordinates: [-1, 0], paths: [1, 3, 5]},
+    {coordinates: [0, 1], paths: [1, 4, 5]}
   ]
 }
 

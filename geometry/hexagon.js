@@ -6,6 +6,7 @@ module.exports = function (opts) {
 
   return new Geometry({
     id: opts.id,
+    type: opts.type,
     points: _.range(7).map(function (i) {
       var dx = Math.cos(i * 2 * Math.PI / 6)
       var dy = Math.sin(i * 2 * Math.PI / 6)

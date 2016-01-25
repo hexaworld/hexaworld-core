@@ -1,6 +1,6 @@
 var _ = require('lodash')
 var inherits = require('inherits')
-var path = require('../geometry/hexagon.js')
+var path = require('../geometry/path.js')
 var hexagon = require('../geometry/hexagon.js')
 var Entity = require('crtrdg-entity')
 
@@ -12,41 +12,48 @@ function World(schema, opts) {
   this.load(schema)
 }
 
-World.prototype.load = function (tiles) {
+World.prototype.load = function (schema) {
   var self = this
   var opts = self.opts
   
   self.lookup = {}
 
-  self.tiles = _.map(tiles, function (t) {
+  self.tiles = _.map(schema, function (t, i) {
     var r = t.coordinates[0]
     var q = t.coordinates[1]
 
     var center = hexagon({
-      id: 'center',
+      id: 'center-' + i,
+      type: 'platform',
       transform: {scale: 0.25},
-      props: {trigger: true}
+      props: {trigger: true, mergeable: true}
     })
 
-    var paths = _.range(6).map(function (i) {
-      if (_.includes(opts.paths, i)) {
+    var paths = _.range(6).map(function (p) {
+      if (_.includes(t.paths, p)) {
         return path({
-          id: 'path',
-          transform: {scale: 0.25, rotation: i * 60},
+          id: 'path-' + p,
+          type: 'platform',
+          props: {mergeable: true},
+          transform: {scale: 0.25, rotation: p * 60},
         })
       }
     })
     _.remove(paths, _.isUndefined)
 
     var children = [center].concat(paths)
+
+    console.log(paths)
     
     var tile = hexagon({
-      id: 'tile',
+      id: 'tile-' + i,
+      type: 'floor',
+      props: {mergeable: true},
       transform: {
         translation: [opts.scale * 3 / 2 * r, opts.scale * Math.sqrt(3) * (q + r / 2)],
-        scale: opts.scale,
-        children: children
-      }
+        scale: opts.scale
+      },
+      children: children
     })
 
     var row = self.lookup[r] || {}
