@@ -19,7 +19,6 @@ function Player (opts) {
     translation: [[0, 0, 0, 0], [0, 0, 1, -1]],
     rotation: [-1, 1, 0, 0]
   })
-  this.waiting = true
 }
 
 Player.prototype.move = function (keys) {

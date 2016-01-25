@@ -29,6 +29,7 @@ Core.prototype.init = function (schema) {
   })
 
   var objects = []
+  
   objects.push(player.geometry)
   world.tiles.forEach(function (tile) {
     objects.push(tile)

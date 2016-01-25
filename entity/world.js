@@ -43,8 +43,6 @@ World.prototype.load = function (schema) {
 
     var children = [center].concat(paths)
 
-    console.log(paths)
-    
     var tile = hexagon({
       id: 'tile-' + i,
       type: 'floor',
