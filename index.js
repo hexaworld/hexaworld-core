@@ -1,10 +1,10 @@
 var _ = require('lodash')
+var inherits = require('inherits')
 var EventEmitter = require('eventemitter2').EventEmitter2
 var Game = require('gameloop')
 var TTY = require('crtrdg-tty')
 var Player = require('./entity/player.js')
 var World = require('./entity/world.js')
-var inherits = require('inherits')
 
 module.exports = Core
 inherits(Core, EventEmitter)
@@ -31,7 +31,10 @@ Core.prototype.init = function (schema) {
   var objects = []
   objects.push(player.geometry)
   world.tiles.forEach(function (tile) {
-    objects.push(tile.geometry)
+    objects.push(tile)
+    tile.children.forEach(function (child) {
+      objects.push(child)
+    })
   })
 
   this.objects = objects

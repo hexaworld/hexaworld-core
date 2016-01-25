@@ -27,8 +27,6 @@
   "homepage": "https://github.com/hexaworld/hexaworld-core#readme",
   "dependencies": {
     "crtrdg-entity": "^1.0.0",
-    "crtrdg-keyboard": "^1.0.1",
-    "crtrdg-touch": "^1.1.0",
     "crtrdg-tty": "^1.0.0",
     "eventemitter2": "^0.4.14",
     "gameloop": "^1.1.3",
