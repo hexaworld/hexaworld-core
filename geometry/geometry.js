@@ -15,8 +15,7 @@ function Geometry (opts) {
   _.defaults(opts.props, {
     trigger: false,
     consumable: false,
-    movable: false,
-    mergeable: false
+    movable: false
   })
   _.assign(this, opts)
   this.stage()
