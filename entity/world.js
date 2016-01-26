@@ -43,6 +43,14 @@ World.prototype.load = function (schema) {
 
     var children = [center].concat(paths)
 
+    if (t.cue) {
+      var cue = point({
+        id: 'cue-' + t.cue.id,
+        type: 'cue-' + t.cue.id
+      })
+      children.push(cue)
+    }
+
     var tile = hexagon({
       id: 'tile-' + i,
       type: 'floor',
