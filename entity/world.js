@@ -24,7 +24,7 @@ World.prototype.load = function (schema) {
     var q = t.coordinates[1]
 
     var center = hexagon({
-      id: 'center-' + i,
+      id: 'tile-' + i + '-center-' + i,
       type: 'platform',
       transform: {scale: 0.25},
       props: {trigger: true}
@@ -32,10 +32,20 @@ World.prototype.load = function (schema) {
 
     var paths = _.range(6).map(function (p) {
       if (_.includes(t.paths, p)) {
+        var children = _.range(3).map(function (b) {
+          return point({
+            id: 'tile-' + i + '-path-' + p + '-bit-' + b,
+            type: 'bit',
+            transform: {translation: [0, 1.5 + b * 0.5]},
+            props: {consumable: true}
+          })
+        })
+
         return path({
-          id: 'path-' + p,
+          id: 'tile-' + i + '-path-' + p,
           type: 'platform',
           transform: {scale: 0.25, rotation: p * 60},
+          children: children
         })
       }
     })
@@ -45,7 +55,7 @@ World.prototype.load = function (schema) {
 
     if (t.cue) {
       var cue = point({
-        id: 'cue-' + t.cue.id,
+        id: 'tile-' + i + '-cue-' + t.cue.id,
         type: 'cue-' + t.cue.id
       })
       children.push(cue)
@@ -69,11 +79,25 @@ World.prototype.load = function (schema) {
   })
 }
 
-World.prototype.tile = function (point) {
-  return this.lookup[r][q]
+World.prototype.getconsumables = function (point) {
+  var tile = this.gettile(point)
+  var consumables = []
+  if (!tile) return consumables
+  tile.children.forEach(function (child) {
+    if (child.props.consumable) consumables.push(child)
+    child.children.forEach(function (subchild) {
+      if (subchild.props.consumable) consumables.push(subchild)
+    })
+  })
+  return consumables
 }
 
-World.prototype.coordinates = function (point) {
+World.prototype.gettile = function (point) {
+  var coordinates = this.getcoordinates(point)
+  return this.lookup[coordinates[0]][coordinates[1]]
+}
+
+World.prototype.getcoordinates = function (point) {
   var x = point[0]
   var y = point[1]
   var s = this.opts.scale

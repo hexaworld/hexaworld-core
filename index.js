@@ -5,6 +5,7 @@ var Game = require('gameloop')
 var TTY = require('crtrdg-tty')
 var Player = require('./entity/player.js')
 var World = require('./entity/world.js')
+var collide = require('point-circle-collision')
 
 module.exports = Core
 inherits(Core, EventEmitter)
@@ -24,8 +25,15 @@ Core.prototype.init = function (schema) {
   var world = new World(schema.map.tiles, {scale: 50})
   var player = new Player()
 
+  var events = new EventEmitter()
+
   self.gameloop.on('update', function (interval) {
     player.move(self.controller.keysDown)
+
+    world.getconsumables(player.translation()).forEach(function (consumable) {
+      var hit = collide(player.translation(), consumable.points[0], 3)
+      if (hit) events.emit('collected', consumable.id)
+    })
   })
 
   var objects = []
@@ -35,8 +43,12 @@ Core.prototype.init = function (schema) {
     objects.push(tile)
     tile.children.forEach(function (child) {
       objects.push(child)
+      child.children.forEach(function (child2) {
+        objects.push(child2)
+      })
     })
   })
 
   this.objects = objects
+  this.events = events
 }
