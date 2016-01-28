@@ -46,17 +46,11 @@ game.start()
 
 ### inputs
 
-#### `schema`
+The required inputs are
 
-Should follow the schema for levels defined in `hexaworld-schema`.
+- `schema` Schema for a level, should follow the schema for levels defined in `hexaworld-schema`. Examples: `hexaworld-levels`
 
-Examples: `hexaworld-levels`
-
-#### `controller`
-
-Should have a `keysDown` property with the current state of keys and/or buttons.
-
-Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
+- `controller` Should have a `keysDown` property with the current state of keys and/or buttons. Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
 
 ### methods
 
