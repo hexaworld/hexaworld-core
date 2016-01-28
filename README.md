@@ -29,25 +29,19 @@ var schema = {
 }
 ```
 
-then create by providing the level, a gameloop, and a controller
+then create by providing the schema and a controller
 
 ```javascript
-var gameloop = require('gameloop')()
-var controller = require('crtrdg-tty')(gameloop)
-
+var controller = require('crtrdg-tty')()
 var core = require('hexaworld-core')
 
-var game = core({
-	schema: schema,
-	gameloop: gameloop, 
-	controller: controller
-})
+var game = core({schema: schema, controller: controller})
 ```
 
-when you start the gameloop the game will begin
+then you can start the game
 
 ```javascript
-gameloop.start()
+game.start()
 ```
 
 ### inputs
@@ -58,16 +52,36 @@ Should follow the schema for levels defined in `hexaworld-schema`.
 
 Examples: `hexaworld-levels`
 
-
-#### `gameloop`
-
-Should have an `update` event for every refresh of the gameloop (e.g. every frame).
-
-Examples: `gameloop`, `gameloop-canvas`
-
-
 #### `controller`
 
 Should have a `keysDown` property with the current state of keys and/or buttons.
 
 Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
+
+### properties
+
+#### `objects`
+
+A list of all game objects (including the player, consumables, and parts of the game world). Each object has the following schema:
+
+```javascript
+{
+	id: 'string',
+	type: 'string',
+	points: [[x,y], [x,y], ...],
+	transform: {translation: [x,y], scale: s, rotation: r}
+}
+```
+
+Which can be used as required by external renderers.
+
+#### `events`
+
+The following events are provided:
+
+- `events.on('consume')
+- `events.on('move')
+- `events.on('enter')
+- `events.on('exit')
+
+Each provides as argument to the callback the object affected by the event.
