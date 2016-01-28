@@ -43,6 +43,7 @@ then you can start the game
 ```javascript
 game.start()
 ```
+with the `crtrdg-tty` controller you can play with your keys and see game events in the terminal! But you'll usually want to combine with a renderer, and use controllers designed for the browser.
 
 ### inputs
 
