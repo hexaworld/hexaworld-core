@@ -67,9 +67,11 @@ Methods are provided to control the underlying game loop
 - `game.pause()` pause the game
 - `game.resume()` resume the game
 
-### objects
+### properties
 
-A list of all game objects (including the player, consumables, and parts of the game world). Each object has the following schema:
+The following properties are returned
+
+- `game.objects` A list of all game objects (including the player, consumables, and parts of the game world) to be used as required by external renderers. Each object has the following schema:
 
 ```javascript
 {
@@ -79,8 +81,6 @@ A list of all game objects (including the player, consumables, and parts of the 
 	transform: {translation: [x,y], scale: s, rotation: r}
 }
 ```
-
-Which can be used as required by external renderers.
 
 ### events
 
