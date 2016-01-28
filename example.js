@@ -15,18 +15,30 @@ var schema = {
   map: map
 }
 
-var gameloop = require('gameloop')()
-var controller = require('crtrdg-tty')(gameloop)
+var controller = require('crtrdg-tty')()
 var core = require('./index.js')
 
 var game = core({
-  schema: schema, 
-  gameloop: gameloop,
+  schema: schema,
   controller: controller
 })
 
-gameloop.on('update', function (interval) {
-  console.log(game.objects[0].transform.translation)
+game.on('consume', function (object) {
+  console.log('consumed: ' + object.id)
 })
 
-gameloop.start()
+game.on('move', function (object) {
+  console.log('moved: ' + object.id)
+})
+
+game.on('enter', function (object) {
+  console.log('entered: ' + object.id)
+})
+
+game.on('exit', function (object) {
+  console.log('exited: ' + object.id)
+})
+
+game.start()
+
+console.log('waiting for keyboard input...')

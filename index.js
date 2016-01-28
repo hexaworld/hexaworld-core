@@ -14,8 +14,8 @@ function Core (opts) {
   if (!(this instanceof Core)) return new Core(opts)
   var self = this
 
-  self.gameloop = opts.gameloop || Game()
-  self.controller = opts.controller || TTY(self.gameloop)
+  self.loop = Game()
+  self.controller = opts.controller || TTY()
   self.init(opts.schema)
 }
 
@@ -25,15 +25,34 @@ Core.prototype.init = function (schema) {
   var world = new World(schema.map.tiles, {scale: 50})
   var player = new Player()
 
-  var events = new EventEmitter()
+  self.loop.on('update', function () {
+    var input = self.controller.keysDown || self.controller.down
+    var moved = player.move(input)
+    if (moved) self.emit('move', player.geometry)
 
-  self.gameloop.on('update', function (interval) {
-    player.move(self.controller.keysDown)
-
-    world.getconsumables(player.translation()).forEach(function (consumable) {
-      var hit = collide(player.translation(), consumable.points[0], 3)
-      if (hit) events.emit('collected', consumable.id)
+    var p = player.translation()
+    
+    world.list('consumable', p).forEach(function (consumable) {
+      if (consumable.collide(p) & !consumable.consumed) {
+        consumable.consumed = true
+        self.emit('consume', consumable)
+      }
     })
+
+    world.list('trigger', p).forEach(function (trigger) {
+      if (trigger.contains(p) & !trigger.triggered) {
+        trigger.triggered = true
+        self.emit('enter', trigger)
+      }
+      if (!trigger.contains(p) & trigger.triggered) {
+        trigger.triggered = false
+        self.emit('exit', trigger)
+      }
+    })
+  })
+
+  self.loop.on('draw', function () {
+    self.emit('draw')
   })
 
   var objects = []
@@ -50,5 +69,20 @@ Core.prototype.init = function (schema) {
   })
 
   this.objects = objects
-  this.events = events
+}
+
+Core.prototype.start = function () {
+  this.loop.start()
+}
+
+Core.prototype.end = function () {
+  this.loop.end()
+}
+
+Core.prototype.pause = function () {
+  this.loop.pause()
+}
+
+Core.prototype.resume = function () {
+  this.loop.resume()
 }
