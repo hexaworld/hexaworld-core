@@ -79,22 +79,23 @@ World.prototype.load = function (schema) {
   })
 }
 
-World.prototype.getconsumables = function (point) {
+World.prototype.list = function (type, point) {
   var tile = this.gettile(point)
-  var consumables = []
-  if (!tile) return consumables
+  var results = []
+  if (!tile) return results
   tile.children.forEach(function (child) {
-    if (child.props.consumable) consumables.push(child)
+    if (child.props[type]) results.push(child)
     child.children.forEach(function (subchild) {
-      if (subchild.props.consumable) consumables.push(subchild)
+      if (subchild.props[type]) results.push(subchild)
     })
   })
-  return consumables
+  return results
 }
 
 World.prototype.gettile = function (point) {
   var coordinates = this.getcoordinates(point)
-  return this.lookup[coordinates[0]][coordinates[1]]
+  var row = this.lookup[coordinates[0]]
+  if(row) return row[coordinates[1]]
 }
 
 World.prototype.getcoordinates = function (point) {
