@@ -25,6 +25,11 @@ Player.prototype.move = function (keys) {
   var rotation = this.geometry.transform.rotation
   var delta = this.movement.compute(keys, rotation)
   this.geometry.update(delta)
+  var cond1 = Math.abs(delta.translation[0]) > 0.0000001
+  var cond2 = Math.abs(delta.translation[1]) > 0.0000001
+  var cond3 = Math.abs(delta.rotation) > 0.0000001
+  var cond4 = Math.abs(delta.scale - 1) > 0.0000001
+  return (cond1 || cond2 || cond3 || cond4)
 }
 
 Player.prototype.moveto = function (delta) {
