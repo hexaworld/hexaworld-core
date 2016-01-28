@@ -79,9 +79,9 @@ Which can be used as required by external renderers.
 
 The following events are provided:
 
-- `events.on('consume')
-- `events.on('move')
-- `events.on('enter')
-- `events.on('exit')
+- `events.on('consume')` collide with a `consumable` object
+- `events.on('move')` player moves
+- `events.on('enter')` player enters a tile
+- `events.on('exit')` player exits a tile
 
 Each provides as argument to the callback the object affected by the event.
