@@ -55,20 +55,7 @@ Core.prototype.init = function (schema) {
     self.emit('draw')
   })
 
-  var objects = []
-  
-  objects.push(player.geometry)
-  world.tiles.forEach(function (tile) {
-    objects.push(tile)
-    tile.children.forEach(function (child) {
-      objects.push(child)
-      child.children.forEach(function (child2) {
-        objects.push(child2)
-      })
-    })
-  })
-
-  this.objects = objects
+  this.objects = world.flatten().concat([player.geometry])
 }
 
 Core.prototype.start = function () {

@@ -79,6 +79,20 @@ World.prototype.load = function (schema) {
   })
 }
 
+World.prototype.flatten = function () {
+  var result = []
+  this.tiles.forEach(function (tile) {
+    result.push(tile)
+    tile.children.forEach(function (child) {
+      result.push(child)
+      child.children.forEach(function (subchild) {
+        result.push(subchild)
+      })
+    })
+  })
+  return result
+}
+
 World.prototype.list = function (type, point) {
   var tile = this.gettile(point)
   var results = []
