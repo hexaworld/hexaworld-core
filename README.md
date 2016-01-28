@@ -58,7 +58,7 @@ Should have a `keysDown` property with the current state of keys and/or buttons.
 
 Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
 
-### `methods`
+### methods
 
 Methods are provided to control the underlying game loop
 
@@ -67,7 +67,7 @@ Methods are provided to control the underlying game loop
 - `game.pause()` pause the game
 - `game.resume()` resume the game
 
-### `objects`
+### objects
 
 A list of all game objects (including the player, consumables, and parts of the game world). Each object has the following schema:
 
@@ -82,7 +82,7 @@ A list of all game objects (including the player, consumables, and parts of the 
 
 Which can be used as required by external renderers.
 
-### `events`
+### events
 
 The following events are provided:
 
