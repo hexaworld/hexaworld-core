@@ -15,9 +15,9 @@ function Player (opts) {
     props: {moveable: true}
   })
   this.movement = new Freemove({
-    keymap: ['<left>', '<right>', '<up>', '<down>'],
-    translation: [[0, 0, 0, 0], [0, 0, 1, -1]],
-    rotation: [-1, 1, 0, 0]
+    keymap: ['<left>', '<right>', '<up>', '<down>', '<tapLeft>', '<tapRight>', '<tapCenter>'],
+    translation: [[0, 0, 0, 0, 0, 0, 0], [0, 0, 1, -1, 0, 0, 5]],
+    rotation: [-1, 1, 0, 0, -5, 5, 0]
   })
 }
 
