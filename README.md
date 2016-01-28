@@ -84,7 +84,7 @@ The following properties are returned
 
 The following events are provided:
 
-- `game.on('consume')` collide with a `consumable` object
+- `game.on('consume')` collide with any consumable object
 - `game.on('move')` player moves
 - `game.on('enter')` player enters a tile
 - `game.on('exit')` player exits a tile
