@@ -60,6 +60,15 @@ Examples: `crtrdg-keyboard`, `crtrdg-touch`, `crtrdg-tty`
 
 ### properties
 
+#### `methods`
+
+Methods are provided to control the underlying game loop
+
+- `game.start()` start the game
+- `game.end()` end the game
+- `game.pause()` pause the game
+- `game.resume()` resume the game
+
 #### `objects`
 
 A list of all game objects (including the player, consumables, and parts of the game world). Each object has the following schema:
@@ -75,13 +84,13 @@ A list of all game objects (including the player, consumables, and parts of the 
 
 Which can be used as required by external renderers.
 
-#### `events`
+#### events
 
 The following events are provided:
 
-- `events.on('consume')` collide with a `consumable` object
-- `events.on('move')` player moves
-- `events.on('enter')` player enters a tile
-- `events.on('exit')` player exits a tile
+- `game.on('consume')` collide with a `consumable` object
+- `game.on('move')` player moves
+- `game.on('enter')` player enters a tile
+- `game.on('exit')` player exits a tile
 
 Each provides as argument to the callback the object affected by the event.
