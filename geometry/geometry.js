@@ -21,32 +21,26 @@ function Geometry (opts) {
     movable: false
   })
   _.assign(this, opts)
+  this.base = _.clone(opts.points)
   this.stage()
 }
 
-Geometry.prototype.stage = function (transform, opts) {
+Geometry.prototype.stage = function (transform) {
   var self = this
-  opts = opts || {}
-  transform = transform || self.transform
-  var op = opts.invert ? transform.invert : transform.apply
-  self.points = op.bind(transform)(self.points)
+
+  if (transform) {
+    self.points = transform.apply(self.points)
+    self.transform.compose(transform)
+  } else {
+    transform = self.transform
+    self.points = transform.apply(self.points)
+  }
+
   if (self.children.length) {
     _.forEach(self.children, function (child) {
-      child.stage(transform, opts)
+      child.stage(transform)
     })
   }
-}
-
-Geometry.prototype.unstage = function () {
-  var self = this
-  self.stage(self.transform, { invert: true })
-}
-
-Geometry.prototype.update = function (transform) {
-  var self = this
-  self.unstage()
-  self.transform.compose(transform)
-  self.stage(self.transform)
 }
 
 Geometry.prototype.contains = function (point) {
