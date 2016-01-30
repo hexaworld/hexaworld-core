@@ -34,6 +34,6 @@
     "lodash": "^4.0.0",
     "point-circle-collision": "^1.0.3",
     "point-in-polygon": "^1.0.0",
-    "transformist": "^1.0.0"
+    "transformist": "^2.0.0"
   }
 }
