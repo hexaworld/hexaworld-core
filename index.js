@@ -13,8 +13,8 @@ inherits(Core, EventEmitter)
 function Core (opts) {
   if (!(this instanceof Core)) return new Core(opts)
   var self = this
-
-  self.loop = Game()
+  var options = {fps: 100}
+  self.loop = Game(options)
   self.controller = opts.controller || TTY()
   self.init(opts.schema)
 }
@@ -26,6 +26,7 @@ Core.prototype.init = function (schema) {
   var player = new Player()
 
   self.loop.on('update', function () {
+    self.emit('update')
     var input = self.controller.keysDown || self.controller.down
     var moved = player.move(input)
     if (moved) self.emit('move', player.geometry)
