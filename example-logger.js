@@ -27,11 +27,5 @@ var logger = require('./logger.js')({
   game: game, 
 })
 
-var output = require('./output.js')({
-  game: game, 
-})
-
-output.on('ready', function() { 
-  game.start()
-  console.log('waiting for keyboard input...')
-})
+game.start()
+console.log('waiting for keyboard input...')

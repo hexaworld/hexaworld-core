@@ -13,7 +13,7 @@ inherits(Core, EventEmitter)
 function Core (opts) {
   if (!(this instanceof Core)) return new Core(opts)
   var self = this
-  var options = {fps: 100}
+  var options = {fps: 10}
   self.loop = Game(options)
   self.controller = opts.controller || TTY()
   self.init(opts.schema)

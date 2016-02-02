@@ -46,12 +46,22 @@ var curTime = now().toFixed(3)
 var nextTime
 
 game.on('update', function (object) {
-  // nextTime = now().toFixed(3)
-  // console.log('update: ' + num + ' - ' + (nextTime - curTime))
-  // curTime = nextTime
-  // num++
+  nextTime = now().toFixed(3)
+  console.log('update: ' + num + ' - ' + (nextTime - curTime))
+  curTime = nextTime
+  num++
 })
 
+var numD = 0
+var curTimeD = now().toFixed(3)
+var nextTimeD
+
+game.on('draw', function (object) {
+  nextTimeD = now().toFixed(3)
+  console.log('draw: ' + numD + ' - ' + (nextTimeD - curTimeD))
+  curTimeD = nextTimeD
+  numD++
+})
 
 game.start()
 
