@@ -31,6 +31,7 @@ Core.prototype.init = function (schema) {
     if (moved) self.emit('move', player.geometry)
 
     var p = player.translation()
+    var r = player.rotation()
     
     world.list('consumable', p).forEach(function (consumable) {
       if (consumable.collide(p) & !consumable.consumed) {
@@ -38,6 +39,39 @@ Core.prototype.init = function (schema) {
         self.emit('consume', consumable)
       }
     })
+
+    var d = {}
+    var distance = null
+    world.list('obstacle', p).forEach(function (obstacle, id) {
+      d[id] = obstacle.distance(p, r)
+    })
+    if (d) {
+      var ind = _.indexOf(d, _.min(d, function (i) {return i.distance}))
+      distance = d[ind].distance
+    }
+    self.emit('distance-forward', distance)
+ 
+    // d = {}
+    // distance = null
+    // world.list('obstacle', p).forEach(function (obstacle, id) {
+    //   d[id] = obstacle.distance(p, r + 90)
+    // })
+    // if (d) {
+    //   var ind = _.indexOf(d, _.min(d, function (i) {return i.distance}))
+    //   distance = d[ind].distance
+    // }
+    // self.emit('distance-left', distance)
+
+    // d = {}
+    // distance = null
+    // world.list('obstacle', p).forEach(function (obstacle, id) {
+    //   d[id] = obstacle.distance(p, r - 90)
+    // })
+    // if (d) {
+    //   var ind = _.indexOf(d, _.min(d, function (i) {return i.distance}))
+    //   distance = d[ind].distance
+    // }
+    // self.emit('distance-right', distance)
 
     world.list('trigger', p).forEach(function (trigger) {
       if (trigger.contains(p) & !trigger.triggered) {

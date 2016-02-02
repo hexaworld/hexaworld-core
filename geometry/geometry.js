@@ -2,6 +2,7 @@ var _ = require('lodash')
 var transform = require('transformist')
 var inside = require('point-in-polygon')
 var collide = require('point-circle-collision')
+var distance = require('ray-to-poly')
 
 module.exports = Geometry
 
@@ -51,4 +52,9 @@ Geometry.prototype.contains = function (point) {
 Geometry.prototype.collide = function (point) {
   var self = this
   return collide(point, self.points[0], 3)
+}
+
+Geometry.prototype.distance = function (point, angle) {
+  var self = this
+  return distance(point, angle, self.points)
 }
